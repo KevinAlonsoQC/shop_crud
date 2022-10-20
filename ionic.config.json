@@ -1,0 +1,7 @@
+{
+  "name": "shop_crud",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
