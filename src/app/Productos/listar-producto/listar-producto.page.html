@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Productos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['crear-producto']">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-card *ngFor="let pro of productos">
+    <ion-img [src]="pro.img"></ion-img>
+    <ion-card-header>
+      <ion-card-title>{{ pro.nombre }}</ion-card-title>
+      <ion-card-subtitle>{{pro.precio | currency:'CLP'}}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-label><ion-chip [color]="pro.stock<15?'danger':'primary'">Stock actual : {{pro.stock}}</ion-chip></ion-label>
+      <ion-item-divider></ion-item-divider>
+      <ion-label>{{ pro.detalle }}</ion-label>
+    </ion-card-content>
+
+    <ion-card-content style="display: flex; justify-content: space-between;">
+      <ion-button color="danger" (click)="delete_producto(pro)">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button>
+        <ion-icon name="pencil-outline"></ion-icon>
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-infinite-scroll (ionInfinite)="cargarMasDatos()">
+    <ion-infinite-scroll-content loadingText="{{texto_carga}}"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>
