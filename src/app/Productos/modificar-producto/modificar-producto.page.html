@@ -1,9 +1,135 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>modificar-producto</ion-title>
+    <ion-title>Editar Producto</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <br><br><br>
+  <form [formGroup]="formulario" novalidate (ngSubmit)="modificar()" >
+    <p style="color: red;">Si no desea reemplazar la imagen, no rellene el campo imagen</p>
+    <ion-item>
+      <ion-label>Imagen</ion-label>
+      <ion-input [disabled]="imagenCargando" (change)="cargarFoto($event)" type="file" formControlName="img"></ion-input>
 
+      <ion-note slot="error" *ngIf="campo('img').invalid  && campo('img').errors && campo('img').errors.required && fueTocado('img')">
+        Este campo es requerido
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input type="text" formControlName="nombre"></ion-input>
+
+      <ion-note slot="error" *ngIf="campo('nombre').invalid  && campo('nombre').errors && campo('nombre').errors.required && fueTocado('nombre')">
+        Este campo es requerido
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('nombre').invalid  && campo('nombre').errors && campo('nombre').errors.maxlength && fueTocado('nombre')">
+        Los caracteres maximos son 20
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('nombre').invalid  && campo('nombre').errors && campo('nombre').errors.minlength && fueTocado('nombre')">
+        Los caracteres maximos son 3
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-select interface="popover" placeholder="Tipo de Ropa" formControlName="tipo">
+        <ion-select-option value='polera'>Polera</ion-select-option>
+        <ion-select-option value='poleron'>Polerón</ion-select-option>
+        <ion-select-option value='zapatilla'>Zapatillas</ion-select-option>
+        <ion-select-option value='pantalon'>Pantalon</ion-select-option>
+        <ion-select-option value='accesorios'>Accesorios</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Precio</ion-label>
+      <ion-range min="100" max="100000" [pin]="true" formControlName="precio"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-select #id_popover interface="popover" placeholder="¿En Oferta?" formControlName="en_oferta">
+        <ion-select-option value=1>Si</ion-select-option>
+        <ion-select-option value=0 ng-checked>No</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="id_popover.value == 1">
+      <ion-label>Precio Oferta</ion-label>
+      <ion-range min="100" max="100000" [pin]="true" formControlName="precio_oferta" ></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">stock</ion-label>
+      <ion-input type="number" formControlName="stock"></ion-input>
+
+      <ion-note slot="error" *ngIf="campo('stock').invalid && campo('stock').errors && campo('stock').errors.required && fueTocado('stock')">
+        Este campo es requerido
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('stock').invalid && campo('stock').errors && campo('stock').errors.min && fueTocado('stock')">
+        El valor minimo es 1
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Talla</ion-label>
+      <ion-input type="number" formControlName="talla"></ion-input>
+
+      <ion-note slot="error" *ngIf="campo('talla').invalid && campo('talla').errors && campo('talla').errors.required && fueTocado('talla')">
+        Este campo es requerido
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('talla').invalid && campo('talla').errors && campo('talla').errors.min && fueTocado('talla')">
+        El valor minimo es 1
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Material</ion-label>
+      <ion-input type="text" formControlName="material"></ion-input>
+
+      <ion-note slot="error" *ngIf="campo('material').invalid  && campo('material').errors && campo('material').errors.required && fueTocado('material')">
+        Este campo es requerido
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('material').invalid  && campo('material').errors && campo('material').errors.maxlength && fueTocado('material')">
+        Los caracteres maximos son 20
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('material').invalid  && campo('material').errors && campo('material').errors.minlength && fueTocado('material')">
+        Los caracteres maximos son 3
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Hecho En</ion-label>
+      <ion-input type="text" formControlName="made_in"></ion-input>
+
+      <ion-note slot="error" *ngIf="campo('made_in').invalid  && campo('made_in').errors && campo('made_in').errors.required && fueTocado('made_in')">
+        Este campo es requerido
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('made_in').invalid  && campo('made_in').errors && campo('made_in').errors.maxlength && fueTocado('made_in')">
+        Los caracteres maximos son 20
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('made_in').invalid  && campo('made_in').errors && campo('made_in').errors.minlength && fueTocado('made_in')">
+        Los caracteres maximos son 3
+      </ion-note>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label position="floating">Detalle</ion-label>
+      <ion-textarea formControlName="detalle"></ion-textarea>
+
+      <ion-note slot="error" *ngIf="campo('detalle').invalid && campo('detalle').errors && campo('detalle').errors.required && fueTocado('detalle')">
+        Este campo es requerido
+      </ion-note>
+      <ion-note mslot="error" *ngIf="campo('detalle').invalid && campo('detalle').errors && campo('detalle').errors.minlength && fueTocado('detalle')">
+        Largo minimo 10
+      </ion-note>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-button [disabled]="formulario.invalid || imagenCargando" role="submit" type="submit">Guardar</ion-button>
+    </ion-item>
+
+  </form>
 </ion-content>

@@ -8,13 +8,19 @@ import { IndexPageRoutingModule } from './index-routing.module';
 
 import { IndexPage } from './index.page';
 
+import { HttpClientModule } from '@angular/common/http';
+
+import { ApiService } from '../../servicio/api.service';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    IndexPageRoutingModule
+    IndexPageRoutingModule,
+    HttpClientModule
   ],
-  declarations: [IndexPage]
+  declarations: [IndexPage],
+  providers: [ApiService]
 })
 export class IndexPageModule {}

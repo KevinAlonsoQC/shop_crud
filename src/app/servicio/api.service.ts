@@ -6,7 +6,6 @@ import { delay } from 'rxjs/operators';
 //Modelos//
 import { Producto, ProductoID, ProductoOp } from '../Modelos/producto';
 import { Carrito, CarritoID, CarritoOp } from '../Modelos/carrito';
-import { Admin, AdminID, AdminOp } from '../Modelos/admin';
 import { Cliente, ClienteID, ClienteOp } from '../Modelos/cliente';
 
 const httpOptions = {
@@ -48,6 +47,10 @@ export class ApiService {
         }
       }
     );
+  }
+
+  CallBack_One_Producto(id: number): Observable<ProductoID | null> {
+    return this.http.get<ProductoID | null>(`${this.api}/${id}`);
   }
 
   AddProducto(producto: Producto){

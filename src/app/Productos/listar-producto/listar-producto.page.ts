@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { ApiService } from '../../servicio/api.service';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { Producto, ProductoID } from '../../Modelos/producto';
@@ -71,6 +71,30 @@ export class ListarProductoPage implements OnInit {
             handler: () => {
               this.api.DeleteProductoId(pro.id).subscribe();
               this.router.navigateByUrl('/');
+            }
+        }
+    ]
+    });
+
+    await alert.present();
+  }
+
+  async update_producto(pro: ProductoID) {
+    const alert = await this.alertController.create({
+      header: '¿Seguro de Editar este Producto?',
+      subHeader: 'Producto: '+pro.nombre+' #'+pro.id,
+      buttons: [
+        {
+            text: 'Cancelar',
+            role: 'cancel',
+            cssClass: 'danger',
+        },
+        {
+            text: 'Editar',
+            handler: () => {
+              this.ruteador.params.subscribe((params : Params) => {
+                this.router.navigate(['/modificar-producto', pro.id])
+              });
             }
         }
     ]

@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ModificarAdminPageRoutingModule } from './modificar-admin-routing.module';
+import { SesionIniciadaPageRoutingModule } from './sesion-iniciada-routing.module';
 
-import { ModificarAdminPage } from './modificar-admin.page';
+import { SesionIniciadaPage } from './sesion-iniciada.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ModificarAdminPageRoutingModule
+    SesionIniciadaPageRoutingModule
   ],
-  declarations: [ModificarAdminPage]
+  declarations: [SesionIniciadaPage]
 })
-export class ModificarAdminPageModule {}
+export class SesionIniciadaPageModule {}

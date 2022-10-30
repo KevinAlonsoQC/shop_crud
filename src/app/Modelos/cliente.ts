@@ -6,6 +6,7 @@ export interface Cliente {
   correo:string;
   celular:number;
   clave:number;
+  admin:boolean;
 }
 export interface ClienteID extends Cliente{
   id: number;

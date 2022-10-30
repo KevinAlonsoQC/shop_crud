@@ -8,13 +8,21 @@ import { ModificarProductoPageRoutingModule } from './modificar-producto-routing
 
 import { ModificarProductoPage } from './modificar-producto.page';
 
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { ApiService } from '../../servicio/api.service';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ModificarProductoPageRoutingModule
+    ModificarProductoPageRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  declarations: [ModificarProductoPage]
+  declarations: [ModificarProductoPage],
+  providers: [ApiService]
 })
 export class ModificarProductoPageModule {}
