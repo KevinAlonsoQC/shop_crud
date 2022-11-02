@@ -1,7 +1,9 @@
 export interface Carrito {
-  items: {};
+  nombre: string;
+  precio: number;
+  cantidad: number;
   total: number;
-  pagado: boolean;
+  owner: number;
 }
 export interface CarritoID extends Carrito{
   id: number;

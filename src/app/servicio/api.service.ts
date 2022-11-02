@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, BehaviorSubject, pipe } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { Observable, BehaviorSubject, pipe, Subject } from 'rxjs';
+import { delay, map, filter } from 'rxjs/operators';
 
 //Modelos//
 import { Producto, ProductoID, ProductoOp } from '../Modelos/producto';
@@ -20,17 +20,77 @@ const httpOptions = {
 })
 
 export class ApiService {
-  api = 'http://localhost:5000/productos';
+  api_productos = 'http://localhost:5000/productos';
+  api_clientes = 'http://localhost:5000/clientes';
+  api_carritos = 'http://localhost:5000/carrito';
+
   NowPage = 1;
 
-  cache_productos = new BehaviorSubject<Array<ProductoID>>([]);
+  private cache_productos = new BehaviorSubject<Array<ProductoID>>([]);
   $Productos_Lista = this.cache_productos.asObservable();
+
 
   constructor(private http:HttpClient) { }
 
+  //Carrito
+  CallBack_Carritos(): Observable<any>{
+    return this.http.get<Array<CarritoID>>(this.api_carritos);
+  }
+
+  CallBack_One_Carrito(id: number): Observable<CarritoID[]> {
+    return this.http.get<CarritoID[]>(`${this.api_carritos}/${id}`)
+  }
+
+  AddCarrito(carrito: Carrito){
+    return this.http.post(this.api_carritos, carrito, httpOptions)
+  }
+
+  DeleteCarrito(id: number): Observable<any> {
+    return this.http.delete(`${this.api_carritos}/${id}`)
+  }
+
+  UpdateCarrito(id: number, payload: CarritoOp): Observable<any>{
+    return this.http.patch(`${this.api_carritos}/${id}`, payload, httpOptions)
+  }
+
+
+
+
+
+
+
+  //Usuarios
+  CallBack_Usuarios(): Observable<any>{
+    return this.http.get<Array<ClienteID>>(this.api_clientes);
+  }
+
+  CallBack_One_Usuario(id: number): Observable<ClienteID[]> {
+    return this.http.get<ClienteID[]>(`${this.api_clientes}/${id}`);
+  }
+
+  AddUsuario(user: Cliente){
+    return this.http.post(this.api_clientes, user, httpOptions)
+  }
+
+  DeleteUsuario(id: number): Observable<any> {
+    return this.http.delete(`${this.api_clientes}/${id}`)
+  }
+
+  UpdateUsuario(id: number, payload: ClienteOp): Observable<any>{
+    return this.http.patch(`${this.api_clientes}/${id}`, payload, httpOptions)
+  }
+
+
+
+
+
+
+
+
+
   //Producto
   CallBack_Productos(){
-    this.http.get<Array<ProductoID>>(`${this.api}?_page=1`).subscribe(datos =>
+    this.http.get<Array<ProductoID>>(`${this.api_productos}?_page=1`).subscribe(datos =>
       {
         this.NowPage = this.NowPage + 1;
         this.cache_productos.next(datos);
@@ -39,7 +99,7 @@ export class ApiService {
   }
 
   CallBack_More_Productos(){
-    this.http.get<Array<ProductoID>>(`${this.api}?_page=${this.NowPage}`).pipe(delay(600)).subscribe(datos =>
+    this.http.get<Array<ProductoID>>(`${this.api_productos}?_page=${this.NowPage}`).pipe(delay(600)).subscribe(datos =>
       {
         if(datos){
           this.NowPage = this.NowPage + 1;
@@ -50,22 +110,19 @@ export class ApiService {
   }
 
   CallBack_One_Producto(id: number): Observable<ProductoID | null> {
-    return this.http.get<ProductoID | null>(`${this.api}/${id}`);
+    return this.http.get<ProductoID | null>(`${this.api_productos}/${id}`);
   }
 
   AddProducto(producto: Producto){
-    return this.http.post(this.api, producto, httpOptions)
-  }
-
-  GetProductoId(id: number): Observable<ProductoID | null> {
-    return this.http.get<ProductoID | null>(`${this.api}/${id}`);
+    return this.http.post(this.api_productos, producto, httpOptions)
   }
 
   DeleteProductoId(id: number): Observable<any> {
-    return this.http.delete(`${this.api}/${id}`)
+    return this.http.delete(`${this.api_productos}/${id}`)
   }
 
   UpdateProductoId(id: number, payload: ProductoOp): Observable<any>{
-    return this.http.patch(`${this.api}/${id}`, payload, httpOptions)
+    return this.http.patch(`${this.api_productos}/${id}`, payload, httpOptions)
   }
+
 }

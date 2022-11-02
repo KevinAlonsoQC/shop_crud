@@ -1,9 +1,66 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>carrito</ion-title>
+    <ion-title>Mi Carrito</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-card *ngFor="let pro of carrito">
+    <ion-card-header>
+      <ion-card-title>{{ pro.nombre }}</ion-card-title>
+      <ion-card-subtitle>{{pro.precio | currency:'CLP'}} c/u</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-fab-button size="small">
+              <ion-icon name="chevron-back-sharp"></ion-icon>
+            </ion-fab-button>
+          </ion-col>
+
+          <ion-col>
+            <ion-fab-button size="small">
+              <ion-label>{{pro.cantidad}}</ion-label>
+            </ion-fab-button>
+          </ion-col>
+
+          <ion-col>
+            <ion-fab-button size="small">
+              <ion-icon name="chevron-forward-sharp"></ion-icon>
+            </ion-fab-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+
+              <ion-icon name="pricetags-sharp"></ion-icon>
+               Total: {{pro.total | currency:'CLP'}}
+
+          </ion-col>
+
+          <ion-col>
+          </ion-col>
+
+          <ion-col>
+            <ion-fab-button size="small" color="danger">
+              <ion-icon name="trash-sharp"></ion-icon>
+            </ion-fab-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+
+  </ion-card>
 
 </ion-content>
+
+<ion-footer>
+  <ion-button color="warning" [routerLink]="['/listar-producto']">
+    <ion-icon name="arrow-back-outline"></ion-icon> Volver
+  </ion-button>
+</ion-footer>

@@ -1,15 +1,21 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Iniciar Sesión</ion-title>
+    <ion-title>Mi Cuenta</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-button color="success" [routerLink]="['listar-producto/']">
-    <ion-icon name="basket-outline"></ion-icon> Productos
-  </ion-button>
-
-  <ion-button>
-    <ion-icon name="body-outline"></ion-icon> Cuentas
-  </ion-button>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button color="success" (click)="ir_productos()">
+      <ion-icon name="basket-outline"></ion-icon> Productos
+    </ion-button>
+
+    <ion-button color="danger" (click)="cerrar_sesion()">
+      <ion-icon name="accessibility-outline"></ion-icon> Cerrar Sesión
+    </ion-button>
+
+  </ion-toolbar>
+</ion-footer>

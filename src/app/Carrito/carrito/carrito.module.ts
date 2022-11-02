@@ -8,13 +8,22 @@ import { CarritoPageRoutingModule } from './carrito-routing.module';
 
 import { CarritoPage } from './carrito.page';
 
+import { HttpClientModule } from '@angular/common/http';
+
+import { ApiService } from '../../servicio/api.service';
+
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CarritoPageRoutingModule
+    CarritoPageRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
-  declarations: [CarritoPage]
+  declarations: [CarritoPage],
+  providers: [ApiService]
 })
 export class CarritoPageModule {}

@@ -5,10 +5,6 @@
 </ion-header>
 
 <ion-content>
-  Formulario es valido = {{ formulario.valid }}
-  <br><br><br>
-  {{ formulario.value | json }}
-
   <form [formGroup]="formulario" novalidate (ngSubmit)="saveProducto()" >
 
     <ion-item>
@@ -37,17 +33,18 @@
 
     <ion-item>
       <ion-select interface="popover" placeholder="Tipo de Ropa" formControlName="tipo">
-        <ion-select-option value='polera'>Polera</ion-select-option>
-        <ion-select-option value='poleron'>Polerón</ion-select-option>
-        <ion-select-option value='zapatilla'>Zapatillas</ion-select-option>
-        <ion-select-option value='pantalon'>Pantalon</ion-select-option>
-        <ion-select-option value='accesorios'>Accesorios</ion-select-option>
+        <ion-select-option value='Polera'>Polera</ion-select-option>
+        <ion-select-option value='Poleron'>Polerón</ion-select-option>
+        <ion-select-option value='Zapatilla'>Zapatillas</ion-select-option>
+        <ion-select-option value='Pantalón'>Pantalon</ion-select-option>
+        <ion-select-option value='Accesorios'>Accesorios</ion-select-option>
+        <ion-select-option value='Accesorios'>Otros</ion-select-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
       <ion-label>Precio</ion-label>
-      <ion-range min="100" max="100000" [pin]="true" formControlName="precio"></ion-range>
+      <ion-input type="number" formControlName="precio"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -59,7 +56,7 @@
 
     <ion-item *ngIf="id_popover.value == 1">
       <ion-label>Precio Oferta</ion-label>
-      <ion-range min="100" max="100000" [pin]="true" formControlName="precio_oferta" ></ion-range>
+      <ion-input type="number" formControlName="precio_oferta"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -83,6 +80,42 @@
       </ion-note>
       <ion-note slot="error" *ngIf="campo('talla').invalid && campo('talla').errors && campo('talla').errors.min && fueTocado('talla')">
         El valor minimo es 1
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Cm Ancho</ion-label>
+      <ion-input type="number" formControlName="cm_ancho"></ion-input>
+
+      <ion-note slot="error" *ngIf="campo('cm_ancho').invalid && campo('cm_ancho').errors && campo('cm_ancho').errors.required && fueTocado('cm_ancho')">
+        Este campo es requerido
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('cm_ancho').invalid && campo('cm_ancho').errors && campo('cm_ancho').errors.min && fueTocado('cm_ancho')">
+        El valor minimo es 10
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Cm Largo</ion-label>
+      <ion-input type="number" formControlName="cm_largo"></ion-input>
+
+      <ion-note slot="error" *ngIf="campo('cm_largo').invalid && campo('cm_largo').errors && campo('cm_largo').errors.required && fueTocado('cm_largo')">
+        Este campo es requerido
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('cm_largo').invalid && campo('cm_largo').errors && campo('cm_largo').errors.min && fueTocado('cm_largo')">
+        El valor minimo es 10
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Cm Profundo</ion-label>
+      <ion-input type="number" formControlName="cm_profundo"></ion-input>
+
+      <ion-note slot="error" *ngIf="campo('cm_profundo').invalid && campo('cm_profundo').errors && campo('cm_profundo').errors.required && fueTocado('cm_profundo')">
+        Este campo es requerido
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('cm_profundo').invalid && campo('cm_profundo').errors && campo('cm_profundo').errors.min && fueTocado('cm_profundo')">
+        El valor minimo es 10
       </ion-note>
     </ion-item>
 
@@ -135,4 +168,8 @@
     </ion-item>
 
   </form>
+
+  <ion-button color="warning" [routerLink]="['/listar-producto']">
+    <ion-icon name="arrow-back-outline"></ion-icon> Volver
+  </ion-button>
 </ion-content>

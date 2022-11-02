@@ -8,13 +8,23 @@ import { CrearClientePageRoutingModule } from './crear-cliente-routing.module';
 
 import { CrearClientePage } from './crear-cliente.page';
 
+
+import { HttpClientModule } from '@angular/common/http';
+
+import { ApiService } from '../../servicio/api.service';
+
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CrearClientePageRoutingModule
+    CrearClientePageRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
-  declarations: [CrearClientePage]
+  declarations: [CrearClientePage],
+  providers: [ApiService]
 })
 export class CrearClientePageModule {}

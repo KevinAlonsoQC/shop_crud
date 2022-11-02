@@ -1,9 +1,137 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>crear-cliente</ion-title>
+    <ion-title>Añadir Producto</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  Formulario es valido = {{ formulario.valid }}
+  <br><br><br>
+  {{ formulario.value | json }}
 
+  <form [formGroup]="formulario" novalidate (ngSubmit)="saveCuenta()" >
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input type="text" formControlName="nombre"></ion-input>
+
+      <ion-note slot="error" *ngIf="campo('nombre').invalid  && campo('nombre').errors && campo('nombre').errors.required && fueTocado('nombre')">
+        Este campo es requerido
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('nombre').invalid  && campo('nombre').errors && campo('nombre').errors.maxlength && fueTocado('nombre')">
+        Los caracteres maximos son 30
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('nombre').invalid  && campo('nombre').errors && campo('nombre').errors.minlength && fueTocado('nombre')">
+        Los caracteres maximos son 2
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Apellido Paterno</ion-label>
+      <ion-input type="text" formControlName="apellido_p"></ion-input>
+
+      <ion-note slot="error" *ngIf="campo('apellido_p').invalid  && campo('apellido_p').errors && campo('apellido_p').errors.required && fueTocado('apellido_p')">
+        Este campo es requerido
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('apellido_p').invalid  && campo('apellido_p').errors && campo('apellido_p').errors.maxlength && fueTocado('apellido_p')">
+        Los caracteres maximos son 30
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('apellido_p').invalid  && campo('apellido_p').errors && campo('apellido_p').errors.minlength && fueTocado('apellido_p')">
+        Los caracteres maximos son 2
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Apellido Materno</ion-label>
+      <ion-input type="text" formControlName="apellido_m"></ion-input>
+
+      <ion-note slot="error" *ngIf="campo('apellido_m').invalid  && campo('apellido_m').errors && campo('apellido_m').errors.required && fueTocado('apellido_m')">
+        Este campo es requerido
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('apellido_m').invalid  && campo('apellido_m').errors && campo('apellido_m').errors.maxlength && fueTocado('apellido_m')">
+        Los caracteres maximos son 30
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('apellido_m').invalid  && campo('apellido_m').errors && campo('apellido_m').errors.minlength && fueTocado('apellido_m')">
+        Los caracteres maximos son 2
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Edad</ion-label>
+      <ion-input type="number" formControlName="edad"></ion-input>
+
+      <ion-note slot="error" *ngIf="campo('edad').invalid  && campo('edad').errors && campo('edad').errors.required && fueTocado('edad')">
+        Este campo es requerido
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('edad').invalid  && campo('edad').errors && campo('edad').errors.min && fueTocado('edad')">
+        El mínimo de edad es de 18 años
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('edad').invalid  && campo('edad').errors && campo('edad').errors.max && fueTocado('edad')">
+        El máximo de edad es de 100 años
+      </ion-note>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label position="floating">Correo</ion-label>
+      <ion-input type="email" formControlName="correo"></ion-input>
+
+      <ion-note slot="error" *ngIf="campo('correo').invalid  && campo('correo').errors && campo('correo').errors.required && fueTocado('correo')">
+        Este campo es requerido
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('correo').invalid  && campo('correo').errors && campo('correo').errors.maxlength && fueTocado('correo')">
+        Los caracteres maximos son 30
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('correo').invalid  && campo('correo').errors && campo('correo').errors.minlength && fueTocado('correo')">
+        Los caracteres mínmos son 6
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('correo').invalid  && campo('correo').errors && campo('correo').errors.email && fueTocado('correo')">
+        Ingresa un email válido
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Celular</ion-label>
+      <ion-input type="number" placeholder="9 xxxx xxxx" formControlName="celular"></ion-input>
+
+      <ion-note slot="error" *ngIf="campo('celular').invalid  && campo('celular').errors && campo('celular').errors.required && fueTocado('celular')">
+        Este campo es requerido
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('celular').invalid  && campo('celular').errors && campo('celular').errors.min && fueTocado('celular')">
+        Ingresa un número válido de 8 dígitos (ante poniendo el 9)
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('celular').invalid  && campo('celular').errors && campo('celular').errors.max && fueTocado('celular')">
+        Ingresa un número válido de 8 dígitos (ante poniendo el 9)
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Clave</ion-label>
+      <ion-input type="number" min="1000" max="9999" formControlName="clave"></ion-input>
+
+      <ion-note slot="error" *ngIf="campo('clave').invalid  && campo('clave').errors && campo('clave').errors.required && fueTocado('clave')">
+        Este campo es requerido
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('clave').invalid  && campo('clave').errors && campo('clave').errors.min && fueTocado('clave')">
+        Ingresa un mínimo de 4 dígitos
+      </ion-note>
+      <ion-note slot="error" *ngIf="campo('clave').invalid  && campo('clave').errors && campo('clave').errors.max && fueTocado('clave')">
+        El máximo de dígitos es 4
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-select #id_popover interface="popover" placeholder="Administrador" formControlName="admin">
+        <ion-select-option value=1>Si</ion-select-option>
+        <ion-select-option value=0 ng-checked>No</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-button [disabled]="formulario.invalid" role="submit" type="submit">Registrarme</ion-button>
+    </ion-item>
+  </form>
+
+  <ion-button color="warning" [routerLink]="['/']">
+    <ion-icon name="arrow-back-outline"></ion-icon> Volver
+  </ion-button>
 </ion-content>

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Inicio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card *ngIf="!enSesion">
+    <ion-card-header>
+      <ion-card-title>Iniciar Sesión</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      Inicia sesión para acceder a los distintos menús interactivos disponibles para el tipo de tu cuenta.
+      Si no tienes una cuenta, puedes registrarte fácilmente
+    </ion-card-content>
+
+    <ion-button fill="clear" (click)="iniciar_sesion()">Iniciar Sesión</ion-button>
+    <ion-button fill="clear" [routerLink]="['/crear-cliente']">Registarse</ion-button>
+  </ion-card>
+
+</ion-content>
+
+<!--
+<ion-footer>
+  <ion-toolbar>
+    <div *ngIf="!enSesion">
+      <p style="color: red;">¡Es requerido iniciar sesión para habilitar esta opción!</p>
+    </div>
+
+    <ion-button [disabled]="!enSesion" color="success" (click)="ir_productos()">
+      <ion-icon name="basket-outline"></ion-icon> Productos
+    </ion-button>
+
+  </ion-toolbar>
+</ion-footer>
+-->

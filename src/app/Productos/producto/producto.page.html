@@ -1,9 +1,119 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>producto</ion-title>
+    <ion-title>Detalles</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-card *ngFor="let pro of producto">
+
+    <ion-img [src]="pro.img"></ion-img>
+    <ion-card-header>
+      <ion-card-title>{{ pro.nombre }}</ion-card-title>
+      <ion-card-subtitle *ngIf="pro.en_oferta == false">{{pro.precio | currency:'CLP'}}</ion-card-subtitle>
+      <ion-card-subtitle *ngIf="pro.en_oferta == true">{{pro.precio_oferta | currency:'CLP'}} <span *ngIf="pro.en_oferta == true" style="color: red;"><li><del>{{pro.precio}}</del></li></span></ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-label>Categoría: {{pro.tipo}}</ion-label>
+      <ion-label><ion-chip [color]="pro.stock<15?'danger':'primary'">Stock actual : {{pro.stock}}</ion-chip></ion-label>
+    </ion-card-content>
+
+    <ion-card-header>
+      <ion-card-title>Más Detalles</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-label>{{pro.detalle}}</ion-label>
+
+        <ion-item>
+          <ion-label>Talla: {{pro.talla}}</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Material: {{pro.material}}</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Hecho en: {{pro.made_in}}</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Medidas: {{pro.cm_ancho}} x {{pro.cm_largo}} x {{pro.cm_profundo}}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-fab-button [disabled]="get_cantidad == 0" size="small" (click)="removeItem()">
+          <ion-icon name="chevron-back-sharp"></ion-icon>
+        </ion-fab-button>
+      </ion-col>
+
+      <ion-col>
+        <ion-fab-button>
+          <ion-label>{{get_cantidad}}</ion-label>
+        </ion-fab-button>
+      </ion-col>
+
+      <ion-col>
+        <ion-fab-button [disabled]="get_cantidad == max_stock" size="small" (click)="addItem()">
+          <ion-icon name="chevron-forward-sharp"></ion-icon>
+        </ion-fab-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+
+      <ion-col>
+        <ion-input *ngIf="get_cantidad > 0" [disabled]="get_cantidad > 0" value="{{total_pedido | currency:'CLP'}}">$</ion-input>
+      </ion-col>
+      <ion-col></ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+
+      <ion-col></ion-col>
+      <ion-col>
+        <ion-button color="success" *ngIf="get_cantidad > 0" (click)="giveItemCarrito()">
+          <ion-icon name="add-sharp"></ion-icon> Añadir al Carro {{get_cantidad}}
+        </ion-button>
+      </ion-col>
+      <ion-col></ion-col>
+
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
+
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button color="warning" [routerLink]="['/listar-producto']">
+          <ion-icon name="arrow-back-outline"></ion-icon> Volver
+        </ion-button>
+      </ion-col>
+
+      <ion-col></ion-col>
+
+      <ion-col>
+        <ion-fab-button>
+          <ion-icon name="cart-sharp" [routerLink]="['/carrito',id_usuario]"></ion-icon>
+        </ion-fab-button>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+</ion-footer>
