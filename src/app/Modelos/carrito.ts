@@ -4,6 +4,7 @@ export interface Carrito {
   cantidad: number;
   total: number;
   owner: number;
+  id_producto: number;
 }
 export interface CarritoID extends Carrito{
   id: number;

@@ -6,7 +6,7 @@
       "precio": 24990,
       "en_oferta": true,
       "precio_oferta": 15990,
-      "stock": 70,
+      "stock": 1,
       "talla": 45,
       "material": "Hilo Especial",
       "made_in": "Turquía",
@@ -74,25 +74,29 @@
       "clave": 4534,
       "admin": false,
       "id": 2
+    },
+    {
+      "nombre": "Alonso",
+      "apellido_p": "Quintrequeo",
+      "apellido_m": "Cerda",
+      "edad": 20,
+      "correo": "prueba@gmail.com",
+      "celular": 912345678,
+      "clave": 1234,
+      "admin": false,
+      "id": 3
     }
   ],
   "admin": [],
   "carrito": [
     {
-      "nombre": "Pantalón Zara",
-      "precio": 14990,
-      "cantidad": 5,
-      "total": 74950,
-      "owner": 2,
-      "id": 2
-    },
-    {
       "nombre": "Chaqueta Mossimo",
       "precio": 15990,
-      "cantidad": 10,
-      "total": 159900,
+      "cantidad": 2,
+      "total": 31980,
       "owner": 2,
-      "id": 3
+      "id_producto": 1,
+      "id": 1
     }
   ]
 }

@@ -5,10 +5,6 @@
 </ion-header>
 
 <ion-content>
-  Formulario es valido = {{ formulario.valid }}
-  <br><br><br>
-  {{ formulario.value | json }}
-
   <form [formGroup]="formulario" novalidate (ngSubmit)="saveCuenta()" >
     <ion-item>
       <ion-label position="floating">Nombre</ion-label>

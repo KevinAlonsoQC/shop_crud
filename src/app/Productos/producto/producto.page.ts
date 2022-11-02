@@ -76,7 +76,8 @@ export class ProductoPage implements OnInit {
           precio: pro.precio_oferta,
           cantidad: this.get_cantidad,
           total: this.total_pedido,
-          owner: this.id_usuario
+          owner: this.id_usuario,
+          id_producto: pro.id
         }
       }else{
         var item = {
@@ -84,7 +85,8 @@ export class ProductoPage implements OnInit {
           precio: pro.precio,
           cantidad: this.get_cantidad,
           total: this.total_pedido,
-          owner: this.id_usuario
+          owner: this.id_usuario,
+          id_producto: pro.id
         }
       }
       this.api.UpdateProductoId(pro.id, {stock: (this.max_stock-this.get_cantidad)}).subscribe()

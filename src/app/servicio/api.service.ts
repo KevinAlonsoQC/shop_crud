@@ -34,23 +34,23 @@ export class ApiService {
 
   //Carrito
   CallBack_Carritos(): Observable<any>{
-    return this.http.get<Array<CarritoID>>(this.api_carritos);
+    return this.http.get<Array<CarritoID>>(this.api_carritos).pipe(delay(3000));
   }
 
   CallBack_One_Carrito(id: number): Observable<CarritoID[]> {
-    return this.http.get<CarritoID[]>(`${this.api_carritos}/${id}`)
+    return this.http.get<CarritoID[]>(`${this.api_carritos}/${id}`).pipe(delay(3000));
   }
 
   AddCarrito(carrito: Carrito){
-    return this.http.post(this.api_carritos, carrito, httpOptions)
+    return this.http.post(this.api_carritos, carrito, httpOptions).pipe(delay(3000));
   }
 
   DeleteCarrito(id: number): Observable<any> {
-    return this.http.delete(`${this.api_carritos}/${id}`)
+    return this.http.delete(`${this.api_carritos}/${id}`).pipe(delay(3000));
   }
 
   UpdateCarrito(id: number, payload: CarritoOp): Observable<any>{
-    return this.http.patch(`${this.api_carritos}/${id}`, payload, httpOptions)
+    return this.http.patch(`${this.api_carritos}/${id}`, payload, httpOptions).pipe(delay(3000));
   }
 
 
@@ -61,23 +61,23 @@ export class ApiService {
 
   //Usuarios
   CallBack_Usuarios(): Observable<any>{
-    return this.http.get<Array<ClienteID>>(this.api_clientes);
+    return this.http.get<Array<ClienteID>>(this.api_clientes).pipe(delay(3000));
   }
 
   CallBack_One_Usuario(id: number): Observable<ClienteID[]> {
-    return this.http.get<ClienteID[]>(`${this.api_clientes}/${id}`);
+    return this.http.get<ClienteID[]>(`${this.api_clientes}/${id}`).pipe(delay(3000));
   }
 
   AddUsuario(user: Cliente){
-    return this.http.post(this.api_clientes, user, httpOptions)
+    return this.http.post(this.api_clientes, user, httpOptions).pipe(delay(3000));
   }
 
   DeleteUsuario(id: number): Observable<any> {
-    return this.http.delete(`${this.api_clientes}/${id}`)
+    return this.http.delete(`${this.api_clientes}/${id}`).pipe(delay(3000));
   }
 
   UpdateUsuario(id: number, payload: ClienteOp): Observable<any>{
-    return this.http.patch(`${this.api_clientes}/${id}`, payload, httpOptions)
+    return this.http.patch(`${this.api_clientes}/${id}`, payload, httpOptions).pipe(delay(3000))
   }
 
 
@@ -89,8 +89,12 @@ export class ApiService {
 
 
   //Producto
+  CallBack_All_Productos(){
+    return this.http.get<Array<ProductoID>>(this.api_productos).pipe(delay(3000));
+  }
+
   CallBack_Productos(){
-    this.http.get<Array<ProductoID>>(`${this.api_productos}?_page=1`).subscribe(datos =>
+    this.http.get<Array<ProductoID>>(`${this.api_productos}?_page=1`).pipe(delay(3000)).subscribe(datos =>
       {
         this.NowPage = this.NowPage + 1;
         this.cache_productos.next(datos);
@@ -99,7 +103,7 @@ export class ApiService {
   }
 
   CallBack_More_Productos(){
-    this.http.get<Array<ProductoID>>(`${this.api_productos}?_page=${this.NowPage}`).pipe(delay(600)).subscribe(datos =>
+    this.http.get<Array<ProductoID>>(`${this.api_productos}?_page=${this.NowPage}`).pipe(delay(3000)).subscribe(datos =>
       {
         if(datos){
           this.NowPage = this.NowPage + 1;
@@ -110,19 +114,19 @@ export class ApiService {
   }
 
   CallBack_One_Producto(id: number): Observable<ProductoID | null> {
-    return this.http.get<ProductoID | null>(`${this.api_productos}/${id}`);
+    return this.http.get<ProductoID | null>(`${this.api_productos}/${id}`).pipe(delay(3000));
   }
 
   AddProducto(producto: Producto){
-    return this.http.post(this.api_productos, producto, httpOptions)
+    return this.http.post(this.api_productos, producto, httpOptions).pipe(delay(3000))
   }
 
   DeleteProductoId(id: number): Observable<any> {
-    return this.http.delete(`${this.api_productos}/${id}`)
+    return this.http.delete(`${this.api_productos}/${id}`).pipe(delay(3000))
   }
 
   UpdateProductoId(id: number, payload: ProductoOp): Observable<any>{
-    return this.http.patch(`${this.api_productos}/${id}`, payload, httpOptions)
+    return this.http.patch(`${this.api_productos}/${id}`, payload, httpOptions).pipe(delay(3000))
   }
 
 }

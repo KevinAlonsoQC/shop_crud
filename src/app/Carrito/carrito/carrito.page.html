@@ -15,7 +15,7 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <ion-fab-button size="small">
+            <ion-fab-button  [disabled]="pro.cantidad == 1 || loading_bucle" size="small" (click)="removeItemCarrito(pro)">
               <ion-icon name="chevron-back-sharp"></ion-icon>
             </ion-fab-button>
           </ion-col>
@@ -27,7 +27,7 @@
           </ion-col>
 
           <ion-col>
-            <ion-fab-button size="small">
+            <ion-fab-button [disabled]="loading_bucle" size="small" (click)="addItemCarrito(pro)">
               <ion-icon name="chevron-forward-sharp"></ion-icon>
             </ion-fab-button>
           </ion-col>
@@ -44,19 +44,19 @@
           </ion-col>
 
           <ion-col>
-          </ion-col>
-
-          <ion-col>
-            <ion-fab-button size="small" color="danger">
+            <ion-fab-button [disabled]="loading_bucle" size="small" color="danger" (click)="deleteItemCarrito(pro)">
               <ion-icon name="trash-sharp"></ion-icon>
             </ion-fab-button>
           </ion-col>
         </ion-row>
       </ion-grid>
+
+      <ion-label *ngIf="msjError">{{mensaje}}</ion-label>
     </ion-card-content>
 
   </ion-card>
 
+  <ion-progress-bar *ngIf="loading_bucle" type="indeterminate"></ion-progress-bar>
 </ion-content>
 
 <ion-footer>
