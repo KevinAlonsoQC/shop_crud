@@ -64,16 +64,25 @@ export class CarritoPage implements OnInit {
   }
 
   removeItemCarrito(pro:CarritoID){
+    this.loading_bucle = true;
     for(let value of this.productos){
       if(value.id == pro.id_producto){
         if(pro.cantidad > 1){
-          this.loading_bucle = true;
           pro.cantidad = pro.cantidad - 1
           pro.total = pro.cantidad*pro.precio
 
-          this.api.UpdateProductoId(value.id, {stock: value.stock+1}).subscribe()
-          this.api.UpdateCarrito(pro.id, {cantidad:pro.cantidad, total: pro.total}).subscribe()
-          this.loading_bucle = false;
+          this.api.UpdateProductoId(value.id, {stock: value.stock+1}).subscribe(data =>{
+            if(data){
+              this.api.UpdateCarrito(pro.id, {cantidad:pro.cantidad, total: pro.total}).subscribe( data2 => {
+                if(data2){
+                  console.log('Actualizado!')
+                  delay(3000)
+                  this.loading_bucle = false;
+                }
+              }).unsubscribe
+            }}
+          ).unsubscribe
+          break
         }else{
           this.mensaje = '¡No puedes llevar una cantidad inferior a 1!'
           this.msjError = true;
@@ -84,15 +93,24 @@ export class CarritoPage implements OnInit {
   }
 
   addItemCarrito(pro:CarritoID){
+    this.loading_bucle = true;
     for(let value of this.productos){
       if(value.id == pro.id_producto){
         if(value.stock >= pro.cantidad+1){
-          this.loading_bucle = true;
           pro.cantidad = pro.cantidad + 1
           pro.total = pro.cantidad*pro.precio
-          this.api.UpdateProductoId(value.id, {stock: value.stock-1}).subscribe()
-          this.api.UpdateCarrito(pro.id, {cantidad:pro.cantidad, total: pro.total}).subscribe()
-          this.loading_bucle = false;
+          this.api.UpdateProductoId(value.id, {stock: value.stock-1}).subscribe(data =>{
+            if(data){
+              this.api.UpdateCarrito(pro.id, {cantidad:pro.cantidad, total: pro.total}).subscribe( data2 => {
+                //if(data2){
+                  console.log('bucle iniciado add!')
+                  delay(3000)
+                  console.log('bucle apagado add')
+                  this.loading_bucle = false;
+                //}
+              }).unsubscribe
+            }}
+          ).unsubscribe
           break
         }else{
           this.mensaje = '¡No puedes llevar más del stock disponible!'
@@ -104,19 +122,21 @@ export class CarritoPage implements OnInit {
   }
 
   deleteItemCarrito(pro:CarritoID){
+    this.loading_bucle = true;
     for(let value of this.productos){
       if(value.id == pro.id_producto){
-        this.loading_bucle = true;
-        this.api.UpdateProductoId(value.id, {stock: value.stock+pro.cantidad}).subscribe()
-        delay(3000)
-        this.api.DeleteCarrito(pro.id).subscribe(data => {
+        this.api.UpdateProductoId(value.id, {stock: value.stock+pro.cantidad}).subscribe(data => {
           if(data){
-            this.router.navigate(['/index'])
+            this.api.DeleteCarrito(pro.id).subscribe(data => {
+              if(data){
+                delay(3000)
+                this.loading_bucle = false;
+                this.router.navigate(['/index'])
+              }
+            }).unsubscribe
           }
-        })
-        this.loading_bucle = false;
+        }).unsubscribe
       }
     }
   }
-
 }

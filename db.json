@@ -6,7 +6,7 @@
       "precio": 24990,
       "en_oferta": true,
       "precio_oferta": 15990,
-      "stock": 1,
+      "stock": 2,
       "talla": 45,
       "material": "Hilo Especial",
       "made_in": "Turquía",
@@ -23,7 +23,7 @@
       "precio": 9990,
       "en_oferta": false,
       "precio_oferta": 0,
-      "stock": 240,
+      "stock": 242,
       "talla": 25,
       "material": "Hilo",
       "made_in": "Chile",
@@ -88,15 +88,5 @@
     }
   ],
   "admin": [],
-  "carrito": [
-    {
-      "nombre": "Chaqueta Mossimo",
-      "precio": 15990,
-      "cantidad": 2,
-      "total": 31980,
-      "owner": 2,
-      "id_producto": 1,
-      "id": 1
-    }
-  ]
+  "carrito": []
 }
