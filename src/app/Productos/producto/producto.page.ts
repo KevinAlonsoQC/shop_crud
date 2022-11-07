@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { ApiService } from '../../servicio/api.service';
 import { ProductoID } from '../../Modelos/producto';
+import { CarritoID } from 'src/app/Modelos/carrito';
 
 @Component({
   selector: 'app-producto',
@@ -17,6 +18,14 @@ export class ProductoPage implements OnInit {
 
   public max_stock: number = 0;
 
+
+  public carro: Array<CarritoID> = [];
+
+  public dont_carro: boolean = false;
+
+  public agregadoRecien: boolean = false;
+
+  public msjError: boolean = false;
   constructor(
     private api: ApiService,
     private router: Router,
@@ -24,8 +33,17 @@ export class ProductoPage implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter(){
+    this.agregadoRecien = false;
+    this.msjError = false;
+    var array = JSON.parse(localStorage.getItem('infoUser'));
+    this.id_usuario = array.id
+
     this.ruteador.params.subscribe(parametros => {
       this.idProducto = parametros.idProducto
+
       this.api.CallBack_One_Producto(this.idProducto).subscribe(producto => {
         if(producto){
           this.producto = [producto]
@@ -36,12 +54,22 @@ export class ProductoPage implements OnInit {
           this.router.navigateByUrl('index');
         }
       })
-    })
-  }
 
-  ionViewWillEnter(){
-    var array = JSON.parse(localStorage.getItem('infoUser'));
-    this.id_usuario = array.id
+      this.api.CallBack_Carritos().subscribe(carro => {
+        var longitud = 0;
+        for(let k of carro){
+          longitud = longitud + 1
+        }
+        if(longitud > 0){
+          console.log('el carro es verdadero')
+          this.carro = carro
+        }else{
+          console.log('dont carro qlo es falso?')
+          this.dont_carro = true;
+        }
+      })
+    })
+
   }
 
   addItem(){
@@ -69,81 +97,62 @@ export class ProductoPage implements OnInit {
   }
 
   giveItemCarrito(){
-    for(let pro of this.producto){
-      if(pro.en_oferta){
-        var item = {
-          nombre: pro.nombre,
-          precio: pro.precio_oferta,
-          cantidad: this.get_cantidad,
-          total: this.total_pedido,
-          owner: this.id_usuario,
-          id_producto: pro.id
-        }
-      }else{
-        var item = {
-          nombre: pro.nombre,
-          precio: pro.precio,
-          cantidad: this.get_cantidad,
-          total: this.total_pedido,
-          owner: this.id_usuario,
-          id_producto: pro.id
-        }
-      }
-      this.api.UpdateProductoId(pro.id, {stock: (this.max_stock-this.get_cantidad)}).subscribe().unsubscribe
-    }
-
-
-    var no_carritos = true;
-    this.api.CallBack_Carritos().subscribe(carro => {
-      no_carritos = false
-      if(carro){
-        for(let value of carro){
-          if(value.owner == item.owner){
-            console.log('Pasó el dueño?')
-            if(value.id_producto == item.id_producto){
-              console.log('--------------------')
-              console.log('Carrito: '+item.total)
-              console.log('Value: '+item.total)
-              console.log('Mezclados: '+(item.total+value.total))
-              console.log('--------------------')
-
-              item.cantidad = item.cantidad + value.cantidad
-              item.total = value.total + item.total
-              this.api.UpdateCarrito(value.id, item).subscribe();
-              console.log('Añadido al mismo item')
-              this.router.navigate(['/carrito', this.id_usuario]);
-              break
-            }
-            else{
-              console.log('Había dueño')
-              this.api.AddCarrito(item).subscribe(data => {
-                if(data){
-                  this.router.navigate(['/carrito', this.id_usuario]);
-                }
-              });
-
-              break
-            }
+    //if(this.get_cantidad <= this.max_stock){
+      var id_item = 0;
+      for(let pro of this.producto){
+        if(pro.en_oferta){
+          var item = {
+            nombre: pro.nombre,
+            precio: pro.precio_oferta,
+            cantidad: this.get_cantidad,
+            total: this.total_pedido,
+            owner: this.id_usuario,
+            id_producto: pro.id
           }
-          else{
-            console.log('No Pasó el dueño?')
-            this.api.AddCarrito(item).subscribe(data => {
-              if(data){
-                this.router.navigate(['/carrito', this.id_usuario]);
-              }
-            });
+        }else{
+          var item = {
+            nombre: pro.nombre,
+            precio: pro.precio,
+            cantidad: this.get_cantidad,
+            total: this.total_pedido,
+            owner: this.id_usuario,
+            id_producto: pro.id
           }
         }
+        id_item = pro.id
       }
-    }).unsubscribe
 
-    if(no_carritos){
-      console.log('no carritos')
-      this.api.AddCarrito(item).subscribe(data => {
-        if(data){
-          this.router.navigate(['/carrito', this.id_usuario]);
-        }
-      });
-    }
+      this.api.UpdateProductoId(id_item, {stock: (this.max_stock-this.get_cantidad)}).subscribe();
+      this.api.AddCarrito(item).subscribe();
+      this.agregadoRecien = true;
+    //  if(this.dont_carro == false){
+    //    for(let value of this.carro){
+    //      if(value.owner == item.owner && value.id_producto == item.id_producto){
+    //        console.log('--------------------')
+    //        console.log('Carrito: '+item.total)
+    //        console.log('Value: '+item.total)
+    //        console.log('Mezclados: '+(item.total+value.total))
+    //        console.log('--------------------')
+    //
+    //        item.cantidad = item.cantidad + value.cantidad
+    //        item.total = value.total + item.total
+    //        this.api.UpdateCarrito(value.id, item).subscribe();
+    //      }
+    //      else{
+    //        console.log('Else, porque existe el dueño pero no el producto')
+    //        this.api.AddCarrito(item).subscribe();
+    //      }
+    //    }
+    //  }else{
+    //    console.log('no hay carro, lo agrego')
+    //    this.api.AddCarrito(item).subscribe();
+    //  }
+    //  this.msjError = false;
+    //  this.agregadoRecien = true;
+    //}
+    //else{
+    //  this.agregadoRecien = false;
+    //  this.msjError = true;
+    //}
   }
 }

@@ -21,7 +21,7 @@ export class IndexPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.api.CallBack_Usuarios().subscribe(callback => (this.usuarios = callback))
+    //this.api.CallBack_Usuarios().subscribe(callback => (this.usuarios = callback))
   }
 
   ir_productos(){

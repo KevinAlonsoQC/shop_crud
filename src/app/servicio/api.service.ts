@@ -41,7 +41,7 @@ export class ApiService {
     return this.http.get<CarritoID[]>(`${this.api_carritos}/${id}`);
   }
 
-  AddCarrito(carrito: Carrito){
+  AddCarrito(carrito: Carrito):Observable<any>{
     return this.http.post(this.api_carritos, carrito, httpOptions);
   }
 
@@ -69,7 +69,7 @@ export class ApiService {
   }
 
   AddUsuario(user: Cliente){
-    return this.http.post(this.api_clientes, user, httpOptions);
+    return this.http.put(this.api_clientes, user, httpOptions);
   }
 
   DeleteUsuario(id: number): Observable<any> {
@@ -118,7 +118,7 @@ export class ApiService {
   }
 
   AddProducto(producto: Producto){
-    return this.http.post(this.api_productos, producto, httpOptions)
+    return this.http.put(this.api_productos, producto, httpOptions)
   }
 
   DeleteProductoId(id: number): Observable<any> {

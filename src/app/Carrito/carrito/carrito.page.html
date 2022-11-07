@@ -52,7 +52,7 @@
       </ion-grid>
 
       <ion-card *ngFor="let item of productos">
-        <ion-label *ngIf="item.id == pro.id_producto && msjErrorInferior && item.stock < pro.cantidad+1">{{mensaje}}</ion-label>
+        <ion-label *ngIf="item.id == pro.id_producto && msjErrorInferior && item.stock <= pro.cantidad">{{mensaje}}</ion-label>
         <ion-label *ngIf="item.id == pro.id_producto && msjError && pro.cantidad <= 1">{{mensaje}}</ion-label>
       </ion-card>
     </ion-card-content>

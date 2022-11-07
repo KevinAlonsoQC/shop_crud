@@ -35,11 +35,9 @@ export class ListarProductoPage implements OnInit {
     this.id_usuario = array.id
 
     if(localStorage.getItem('admin')){
-      console.log('Es administrador')
       this.admin = true
     }
     else if(localStorage.getItem('noadmin')){
-      console.log('no es administrador')
       this.admin = false
     }
     else{
