@@ -15,7 +15,7 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <ion-fab-button  [disabled]="pro.cantidad == 1 || loading_bucle" size="small" (click)="removeItemCarrito(pro)">
+            <ion-fab-button  [disabled]="pro.cantidad == 1" size="small" (click)="removeItemCarrito(pro)">
               <ion-icon name="chevron-back-sharp"></ion-icon>
             </ion-fab-button>
           </ion-col>
@@ -27,7 +27,7 @@
           </ion-col>
 
           <ion-col>
-            <ion-fab-button [disabled]="loading_bucle" size="small" (click)="addItemCarrito(pro)">
+            <ion-fab-button size="small" (click)="addItemCarrito(pro)">
               <ion-icon name="chevron-forward-sharp"></ion-icon>
             </ion-fab-button>
           </ion-col>
@@ -44,21 +44,30 @@
           </ion-col>
 
           <ion-col>
-            <ion-fab-button [disabled]="loading_bucle" size="small" color="danger" (click)="deleteItemCarrito(pro)">
+            <ion-fab-button size="small" color="danger" (click)="deleteItemCarrito(pro)">
               <ion-icon name="trash-sharp"></ion-icon>
             </ion-fab-button>
           </ion-col>
         </ion-row>
       </ion-grid>
 
-      <ion-label *ngIf="msjError">{{mensaje}}</ion-label>
+      <ion-card *ngFor="let item of productos">
+        <ion-label *ngIf="item.id == pro.id_producto && msjErrorInferior && item.stock < pro.cantidad+1">{{mensaje}}</ion-label>
+        <ion-label *ngIf="item.id == pro.id_producto && msjError && pro.cantidad <= 1">{{mensaje}}</ion-label>
+      </ion-card>
     </ion-card-content>
 
+  </ion-card>
+
+  <ion-card>
+    <ion-card-title>Precio Total:</ion-card-title>
+    <ion-card-header>{{total_pago | currency:'CLP'}}</ion-card-header>
+    <ion-button>Comprar</ion-button>
   </ion-card>
 </ion-content>
 
 <ion-footer>
-  <ion-button color="warning" [routerLink]="['/listar-producto']">
+  <ion-button color="warning" [routerLink]="['/listar-producto']" (click)="borrarCache()">
     <ion-icon name="arrow-back-outline"></ion-icon> Volver
   </ion-button>
 </ion-footer>

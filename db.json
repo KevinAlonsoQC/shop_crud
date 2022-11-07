@@ -6,7 +6,7 @@
       "precio": 24990,
       "en_oferta": true,
       "precio_oferta": 15990,
-      "stock": 2,
+      "stock": 7,
       "talla": 45,
       "material": "Hilo Especial",
       "made_in": "Turquía",
@@ -23,7 +23,7 @@
       "precio": 9990,
       "en_oferta": false,
       "precio_oferta": 0,
-      "stock": 242,
+      "stock": 231,
       "talla": 25,
       "material": "Hilo",
       "made_in": "Chile",
@@ -85,8 +85,47 @@
       "clave": 1234,
       "admin": false,
       "id": 3
+    },
+    {
+      "nombre": "Prueba",
+      "apellido_p": "Aloja",
+      "apellido_m": "ALoja",
+      "edad": 23,
+      "correo": "123@gmail.com",
+      "celular": 912345678,
+      "clave": 1234,
+      "admin": false,
+      "id": 4
     }
   ],
   "admin": [],
-  "carrito": []
+  "carrito": [
+    {
+      "nombre": "Polera Adidas",
+      "precio": 9990,
+      "cantidad": 4,
+      "total": 39960,
+      "owner": 2,
+      "id_producto": 2,
+      "id": 1
+    },
+    {
+      "nombre": "Polera Adidas",
+      "precio": 9990,
+      "cantidad": 1,
+      "total": 9990,
+      "owner": 2,
+      "id_producto": 2,
+      "id": 2
+    },
+    {
+      "nombre": "Polera Adidas",
+      "precio": 9990,
+      "cantidad": 2,
+      "total": 19980,
+      "owner": 2,
+      "id_producto": 2,
+      "id": 3
+    }
+  ]
 }

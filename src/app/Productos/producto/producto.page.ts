@@ -89,15 +89,61 @@ export class ProductoPage implements OnInit {
           id_producto: pro.id
         }
       }
-      this.api.UpdateProductoId(pro.id, {stock: (this.max_stock-this.get_cantidad)}).subscribe()
+      this.api.UpdateProductoId(pro.id, {stock: (this.max_stock-this.get_cantidad)}).subscribe().unsubscribe
     }
 
-    this.api.AddCarrito(item).subscribe(data => {
-      if(data){
-        console.log('Añadido con éxito')
-        this.router.navigate(['/carrito', this.id_usuario]);
-      }
-    });
-  }
 
+    var no_carritos = true;
+    this.api.CallBack_Carritos().subscribe(carro => {
+      no_carritos = false
+      if(carro){
+        for(let value of carro){
+          if(value.owner == item.owner){
+            console.log('Pasó el dueño?')
+            if(value.id_producto == item.id_producto){
+              console.log('--------------------')
+              console.log('Carrito: '+item.total)
+              console.log('Value: '+item.total)
+              console.log('Mezclados: '+(item.total+value.total))
+              console.log('--------------------')
+
+              item.cantidad = item.cantidad + value.cantidad
+              item.total = value.total + item.total
+              this.api.UpdateCarrito(value.id, item).subscribe();
+              console.log('Añadido al mismo item')
+              this.router.navigate(['/carrito', this.id_usuario]);
+              break
+            }
+            else{
+              console.log('Había dueño')
+              this.api.AddCarrito(item).subscribe(data => {
+                if(data){
+                  this.router.navigate(['/carrito', this.id_usuario]);
+                }
+              });
+
+              break
+            }
+          }
+          else{
+            console.log('No Pasó el dueño?')
+            this.api.AddCarrito(item).subscribe(data => {
+              if(data){
+                this.router.navigate(['/carrito', this.id_usuario]);
+              }
+            });
+          }
+        }
+      }
+    }).unsubscribe
+
+    if(no_carritos){
+      console.log('no carritos')
+      this.api.AddCarrito(item).subscribe(data => {
+        if(data){
+          this.router.navigate(['/carrito', this.id_usuario]);
+        }
+      });
+    }
+  }
 }

@@ -22,10 +22,13 @@ export class CarritoPage implements OnInit {
   $carrito_usuario = this.cache_carro.asObservable();
 
   public msjError: boolean = false;
+  public msjErrorInferior: boolean = false;
   public mensaje: string = '';
 
 
   public loading_bucle: boolean = false;
+
+  public total_pago: number = 0;
 
   constructor(
     private api: ApiService,
@@ -35,7 +38,6 @@ export class CarritoPage implements OnInit {
   ){ }
 
   ngOnInit() {
-
   }
 
   ionViewWillEnter(){
@@ -47,19 +49,21 @@ export class CarritoPage implements OnInit {
 
           for(let value of carro){
             if(value.owner == this.idCliente){
+
               this.cache_carro.next(this.cache_carro.getValue().concat(value));
+              this.total_pago = this.total_pago + (value.precio*value.cantidad)
+              console.log('paso??')
             }
           }
-
           this.$carrito_usuario.subscribe(numbero => {
             this.carrito = numbero
           })
         }
       })
     })
-
     this.api.CallBack_All_Productos().subscribe(data => {
       this.productos = data
+      console.log(this.productos)
     })
   }
 
@@ -70,18 +74,15 @@ export class CarritoPage implements OnInit {
         if(pro.cantidad > 1){
           pro.cantidad = pro.cantidad - 1
           pro.total = pro.cantidad*pro.precio
+          this.total_pago = this.total_pago - pro.precio
 
           this.api.UpdateProductoId(value.id, {stock: value.stock+1}).subscribe(data =>{
-            if(data){
               this.api.UpdateCarrito(pro.id, {cantidad:pro.cantidad, total: pro.total}).subscribe( data2 => {
-                if(data2){
-                  console.log('Actualizado!')
-                  delay(3000)
-                  this.loading_bucle = false;
-                }
+                this.loading_bucle = false;
               }).unsubscribe
-            }}
-          ).unsubscribe
+            }
+          )
+
           break
         }else{
           this.mensaje = '¡No puedes llevar una cantidad inferior a 1!'
@@ -99,22 +100,18 @@ export class CarritoPage implements OnInit {
         if(value.stock >= pro.cantidad+1){
           pro.cantidad = pro.cantidad + 1
           pro.total = pro.cantidad*pro.precio
+          this.total_pago = this.total_pago + pro.precio
+
           this.api.UpdateProductoId(value.id, {stock: value.stock-1}).subscribe(data =>{
-            if(data){
               this.api.UpdateCarrito(pro.id, {cantidad:pro.cantidad, total: pro.total}).subscribe( data2 => {
-                //if(data2){
-                  console.log('bucle iniciado add!')
-                  delay(3000)
-                  console.log('bucle apagado add')
                   this.loading_bucle = false;
-                //}
               }).unsubscribe
-            }}
-          ).unsubscribe
+            }
+          )
           break
         }else{
           this.mensaje = '¡No puedes llevar más del stock disponible!'
-          this.msjError = true;
+          this.msjErrorInferior = true;
           break
         }
       }
@@ -125,18 +122,22 @@ export class CarritoPage implements OnInit {
     this.loading_bucle = true;
     for(let value of this.productos){
       if(value.id == pro.id_producto){
+        this.total_pago = this.total_pago - pro.total
         this.api.UpdateProductoId(value.id, {stock: value.stock+pro.cantidad}).subscribe(data => {
           if(data){
             this.api.DeleteCarrito(pro.id).subscribe(data => {
-              if(data){
-                delay(3000)
-                this.loading_bucle = false;
-                this.router.navigate(['/index'])
-              }
+              this.loading_bucle = false;
+              this.router.navigate(['/index'])
             }).unsubscribe
           }
-        }).unsubscribe
+        })
       }
     }
+  }
+
+  borrarCache(){
+    this.cache_carro = new BehaviorSubject<Array<CarritoID>>([]);
+    this.carrito = [];
+    console.log('Caché borrado')
   }
 }
