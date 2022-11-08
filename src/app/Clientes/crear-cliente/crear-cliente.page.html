@@ -103,15 +103,16 @@
     <ion-item>
       <ion-label>Clave</ion-label>
       <ion-input type="number" min="1000" max="9999" formControlName="clave"></ion-input>
+      <ion-note>Pin de 4 Dígitos sobre 1</ion-note>
 
       <ion-note slot="error" *ngIf="campo('clave').invalid  && campo('clave').errors && campo('clave').errors.required && fueTocado('clave')">
         Este campo es requerido
       </ion-note>
       <ion-note slot="error" *ngIf="campo('clave').invalid  && campo('clave').errors && campo('clave').errors.min && fueTocado('clave')">
-        Ingresa un mínimo de 4 dígitos
+        Ingresa un mínimo de 4 dígitos sobre 1
       </ion-note>
       <ion-note slot="error" *ngIf="campo('clave').invalid  && campo('clave').errors && campo('clave').errors.max && fueTocado('clave')">
-        El máximo de dígitos es 4
+        El máximo de dígitos es 4 sobre 1
       </ion-note>
     </ion-item>
 

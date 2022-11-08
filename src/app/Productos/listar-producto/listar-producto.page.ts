@@ -54,7 +54,7 @@ export class ListarProductoPage implements OnInit {
           this.scroll.complete();
         }
       }
-    )
+    ).unsubscribe
   }
 
   cargarMasDatos(){

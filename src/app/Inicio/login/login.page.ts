@@ -56,8 +56,12 @@ export class LoginPage implements OnInit {
         {
             text: 'Iniciar',
             handler: (data) => {
+              var sesion = false;
+
               for(let info of this.usuarios){
                 if(info.correo === data.correo && info.clave === Number.parseInt(data.clave) ){
+                  sesion = true;
+
                   if(info.admin){
                     localStorage.setItem('admin', 'true')
                   }else{
@@ -70,12 +74,31 @@ export class LoginPage implements OnInit {
                   break
                 }
               }
+
+              if(!sesion){
+                this.errorSesion();
+              }
             }
         }
     ]
     });
 
     await alert.present();
+  }
+
+  async errorSesion() {
+    const alert2 = await this.alertController.create({
+      header: '¡Email y/o Contraseña incorrecta!',
+
+      buttons: [
+        {
+            text: 'Ok',
+            role: 'cancel',
+            cssClass: 'danger',
+        },
+      ]
+    });
+    await alert2.present();
   }
 }
 

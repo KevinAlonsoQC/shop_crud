@@ -69,7 +69,7 @@ export class ApiService {
   }
 
   AddUsuario(user: Cliente){
-    return this.http.put(this.api_clientes, user, httpOptions);
+    return this.http.post(this.api_clientes, user, httpOptions);
   }
 
   DeleteUsuario(id: number): Observable<any> {
@@ -118,7 +118,7 @@ export class ApiService {
   }
 
   AddProducto(producto: Producto){
-    return this.http.put(this.api_productos, producto, httpOptions)
+    return this.http.post(this.api_productos, producto, httpOptions)
   }
 
   DeleteProductoId(id: number): Observable<any> {

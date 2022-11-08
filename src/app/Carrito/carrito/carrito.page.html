@@ -12,27 +12,31 @@
     </ion-card-header>
 
     <ion-card-content>
+
+
       <ion-grid>
         <ion-row>
           <ion-col>
-            <ion-fab-button  [disabled]="pro.cantidad == 1" size="small" (click)="removeItemCarrito(pro)">
-              <ion-icon name="chevron-back-sharp"></ion-icon>
+            <ion-fab-button [disabled]="pro.cantidad == 1 || loading_bucle" size="small" style="width: 35px; height: 35px;" (click)="removeItemCarrito(pro)">
+              <ion-icon name="remove-outline" style="width: 15px; height: 15px;"></ion-icon>
             </ion-fab-button>
           </ion-col>
 
           <ion-col>
-            <ion-fab-button size="small">
+            <ion-fab-button size="small" style="width: 40px; height: 40px;">
               <ion-label>{{pro.cantidad}}</ion-label>
             </ion-fab-button>
           </ion-col>
 
           <ion-col>
-            <ion-fab-button size="small" (click)="addItemCarrito(pro)">
-              <ion-icon name="chevron-forward-sharp"></ion-icon>
+            <ion-fab-button [disabled]="loading_bucle" size="small" style="width: 35px; height: 35px;" (click)="addItemCarrito(pro)">
+              <ion-icon name="add-outline" style="width: 15px; height: 15px;"></ion-icon>
             </ion-fab-button>
           </ion-col>
         </ion-row>
       </ion-grid>
+
+
 
       <ion-grid>
         <ion-row>
@@ -44,7 +48,7 @@
           </ion-col>
 
           <ion-col>
-            <ion-fab-button size="small" color="danger" (click)="deleteItemCarrito(pro)">
+            <ion-fab-button [disabled]="loading_bucle" size="small" color="danger" (click)="deleteItemCarrito(pro)">
               <ion-icon name="trash-sharp"></ion-icon>
             </ion-fab-button>
           </ion-col>
