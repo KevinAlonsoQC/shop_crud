@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { ApiService } from '../../servicio/api.service';
 import { IonInfiniteScroll } from '@ionic/angular';
-import { Producto, ProductoID } from '../../Modelos/producto';
+import { ProductoID } from '../../Modelos/producto';
 import { AlertController } from '@ionic/angular';
 
 @Component({
@@ -36,25 +36,20 @@ export class ListarProductoPage implements OnInit {
 
     if(localStorage.getItem('admin')){
       this.admin = true
-    }
-    else if(localStorage.getItem('noadmin')){
+    }else if(localStorage.getItem('noadmin')){
       this.admin = false
-    }
-    else{
-      console.log('¿eLSE?')
+    }else{
       localStorage.clear();
       this.router.navigateByUrl('/')
     }
 
     this.api.CallBack_Productos()
-    this.api.$Productos_Lista.subscribe(datosActualizados =>
-      {
-        this.productos = datosActualizados;
-        if(this.scroll){
-          this.scroll.complete();
-        }
+    this.api.$Productos_Lista.subscribe(datosActualizados =>{
+      this.productos = datosActualizados;
+      if(this.scroll){
+        this.scroll.complete();
       }
-    ).unsubscribe
+    })
   }
 
   cargarMasDatos(){

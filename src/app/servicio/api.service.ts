@@ -38,7 +38,7 @@ export class ApiService {
   }
 
   CallBack_One_Carrito(id: number): Observable<CarritoID[]> {
-    return this.http.get<CarritoID[]>(`${this.api_carritos}/${id}`);
+    return this.http.get<CarritoID[]>(`${this.api_carritos}?owner=${id}`);
   }
 
   AddCarrito(carrito: Carrito):Observable<any>{
@@ -103,7 +103,7 @@ export class ApiService {
   }
 
   CallBack_More_Productos(){
-    this.http.get<Array<ProductoID>>(`${this.api_productos}?_page=${this.NowPage}`).subscribe(datos =>
+    this.http.get<Array<ProductoID>>(`${this.api_productos}?_page=${this.NowPage}`).pipe(delay(2500)).subscribe(datos =>
       {
         if(datos){
           this.NowPage = this.NowPage + 1;

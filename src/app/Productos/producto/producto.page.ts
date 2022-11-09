@@ -3,7 +3,8 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { ApiService } from '../../servicio/api.service';
 import { ProductoID } from '../../Modelos/producto';
 import { CarritoID } from 'src/app/Modelos/carrito';
-import { ValueAccessor } from '@ionic/angular/directives/control-value-accessors/value-accessor';
+import { LoadingController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-producto',
@@ -18,7 +19,7 @@ export class ProductoPage implements OnInit {
   public get_cantidad: number = 0;
 
   public max_stock: number = 0;
-
+  public loading_add: boolean = false;
 
   public carro: Array<CarritoID> = [];
 
@@ -27,13 +28,15 @@ export class ProductoPage implements OnInit {
   constructor(
     private api: ApiService,
     private router: Router,
-    private ruteador: ActivatedRoute
+    private ruteador: ActivatedRoute,
+    private loading: LoadingController,
   ) { }
 
   ngOnInit() {
   }
 
   ionViewWillEnter(){
+    this.loading_add = false;
     var array = JSON.parse(localStorage.getItem('infoUser'));
     this.id_usuario = array.id
 
@@ -90,6 +93,7 @@ export class ProductoPage implements OnInit {
   }
 
   async giveItemCarrito(){
+    this.loading_add = true;
     if(this.get_cantidad <= this.max_stock){
       var id_item = 0;
       var existe = false;
@@ -106,14 +110,15 @@ export class ProductoPage implements OnInit {
       }
 
       this.api.UpdateProductoId(id_item, {stock: (this.max_stock-this.get_cantidad)}).subscribe();
-      await this.sleep(1600);
+      this.showLoading()
+      await this.sleep(3000);
 
       if(this.dont_carro == false){
         this.carro.filter(data => {
           if(data.owner == item.owner){
-            console.log('Dueños '+data.owner + ' ' + item.owner)
+            //console.log('Dueños '+data.owner + ' ' + item.owner)
             if(data.id_producto == item.id_producto){
-              console.log('Productos '+ data.id_producto + ' ' + item.id_producto)
+              //console.log('Productos '+ data.id_producto + ' ' + item.id_producto)
               existe = true;
               item.cantidad = item.cantidad + data.cantidad
               item.total = data.total + item.total
@@ -123,18 +128,16 @@ export class ProductoPage implements OnInit {
         })
 
         if(!existe){
-          console.log('Else, porque existe el dueño pero no el producto')
+          //console.log('Else, porque existe el dueño pero no el producto')
           this.api.AddCarrito(item).subscribe();
         }
 
       }else{
-        await this.sleep(1600);
-        console.log('no hay carro, lo agrego')
+        //console.log('no hay carro, lo agrego')
         this.api.AddCarrito(item).subscribe();
       }
 
       this.msjError = false;
-      await this.sleep(600)
       this.ruteador.params.subscribe((params : Params) => {
         this.router.navigate(['/carrito', this.id_usuario])
       });
@@ -143,6 +146,16 @@ export class ProductoPage implements OnInit {
     else{
       this.msjError = true;
     }
+  }
+
+
+  async showLoading() {
+    const loading = await this.loading.create({
+      message: 'Añadiendo al Carrito...',
+      duration: 2600,
+    });
+
+    loading.present();
   }
 
 

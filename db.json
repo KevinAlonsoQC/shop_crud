@@ -6,7 +6,7 @@
       "precio": 24990,
       "en_oferta": true,
       "precio_oferta": 15990,
-      "stock": 46,
+      "stock": 56,
       "talla": 45,
       "material": "Hilo Especial",
       "made_in": "Turquía",
@@ -23,7 +23,7 @@
       "precio": 9990,
       "en_oferta": false,
       "precio_oferta": 0,
-      "stock": 269,
+      "stock": 266,
       "talla": 25,
       "material": "Hilo",
       "made_in": "Chile",
@@ -40,7 +40,7 @@
       "precio": 24990,
       "en_oferta": true,
       "precio_oferta": 14990,
-      "stock": 0,
+      "stock": 39,
       "talla": 50,
       "material": "Lana",
       "made_in": "Argentina",
@@ -57,7 +57,7 @@
       "precio": 58990,
       "en_oferta": true,
       "precio_oferta": 25990,
-      "stock": 18,
+      "stock": 48,
       "talla": 48,
       "material": "Hilo de Italia",
       "made_in": "China",
@@ -67,6 +67,23 @@
       "cm_largo": 45,
       "cm_profundo": 60,
       "id": 4
+    },
+    {
+      "nombre": "Chaqueta Top",
+      "detalle": "Disfruta del más precioso material",
+      "precio": 160000,
+      "en_oferta": true,
+      "precio_oferta": 89990,
+      "stock": 95,
+      "talla": 45,
+      "material": "Hilo Especial",
+      "made_in": "Turquía",
+      "tipo": "Poleron",
+      "img": "data:image/jpeg;base64,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",
+      "cm_ancho": 100,
+      "cm_largo": 100,
+      "cm_profundo": 100,
+      "id": 5
     }
   ],
   "clientes": [
@@ -120,19 +137,19 @@
     {
       "nombre": "Chaqueta Mossimo",
       "precio": 15990,
-      "cantidad": 10,
-      "total": 159900,
+      "cantidad": 6,
+      "total": 95940,
       "owner": 2,
       "id_producto": 1,
       "id": 1
     },
     {
-      "nombre": "Pantalón Armany",
-      "precio": 25990,
+      "nombre": "Polera Adidas",
+      "precio": 9990,
       "cantidad": 2,
-      "total": 51980,
+      "total": 19980,
       "owner": 2,
-      "id_producto": 4,
+      "id_producto": 2,
       "id": 2
     }
   ]

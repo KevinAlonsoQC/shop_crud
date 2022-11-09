@@ -6,6 +6,11 @@
 
 <ion-content>
   <ion-card *ngFor="let pro of carrito">
+    <div *ngFor="let item of productos">
+      <ion-img *ngIf="pro.id_producto == item.id" src="{{item.img}}" style="border-radius: 50% !important; overflow: hidden;"></ion-img>
+      <ion-label *ngIf="pro.id_producto == item.id"><ion-chip [color]="item.stock<15?'danger':'primary'">Stock actual : {{item.stock}}</ion-chip></ion-label>
+    </div>
+
     <ion-card-header>
       <ion-card-title>{{ pro.nombre }}</ion-card-title>
       <ion-card-subtitle>{{pro.precio | currency:'CLP'}} c/u</ion-card-subtitle>
@@ -55,18 +60,22 @@
         </ion-row>
       </ion-grid>
 
-      <ion-card *ngFor="let item of productos">
-        <ion-label *ngIf="item.id == pro.id_producto && msjErrorInferior && item.stock <= pro.cantidad">{{mensaje}}</ion-label>
-        <ion-label *ngIf="item.id == pro.id_producto && msjError && pro.cantidad <= 1">{{mensaje}}</ion-label>
-      </ion-card>
     </ion-card-content>
 
   </ion-card>
 
-  <ion-card>
+  <ion-card *ngIf="total_pago > 0">
     <ion-card-title>Precio Total:</ion-card-title>
     <ion-card-header>{{total_pago | currency:'CLP'}}</ion-card-header>
     <ion-button>Comprar</ion-button>
+  </ion-card>
+
+  <ion-card *ngIf="total_pago <= 0">
+    <ion-card-header style="color: red;">Carrito Vacio :(</ion-card-header>
+    <ion-img src="https://acegif.com/wp-content/uploads/gifs/sad-cat-67.gif"></ion-img>
+    <br>
+    <ion-card-header>¡Anda a ver nuestro catálogo! - No te lo pierdas, muchas ofertas te esperan</ion-card-header>
+    <ion-button disabled>Comprar</ion-button>
   </ion-card>
 </ion-content>
 
