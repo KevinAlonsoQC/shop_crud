@@ -6,7 +6,7 @@
       "precio": 24990,
       "en_oferta": true,
       "precio_oferta": 15990,
-      "stock": 56,
+      "stock": 62,
       "talla": 45,
       "material": "Hilo Especial",
       "made_in": "Turquía",
@@ -23,7 +23,7 @@
       "precio": 9990,
       "en_oferta": false,
       "precio_oferta": 0,
-      "stock": 266,
+      "stock": 261,
       "talla": 25,
       "material": "Hilo",
       "made_in": "Chile",
@@ -40,7 +40,7 @@
       "precio": 24990,
       "en_oferta": true,
       "precio_oferta": 14990,
-      "stock": 39,
+      "stock": 36,
       "talla": 50,
       "material": "Lana",
       "made_in": "Argentina",
@@ -135,19 +135,10 @@
   "admin": [],
   "carrito": [
     {
-      "nombre": "Chaqueta Mossimo",
-      "precio": 15990,
-      "cantidad": 6,
-      "total": 95940,
-      "owner": 2,
-      "id_producto": 1,
-      "id": 1
-    },
-    {
       "nombre": "Polera Adidas",
       "precio": 9990,
-      "cantidad": 2,
-      "total": 19980,
+      "cantidad": 7,
+      "total": 69930,
       "owner": 2,
       "id_producto": 2,
       "id": 2

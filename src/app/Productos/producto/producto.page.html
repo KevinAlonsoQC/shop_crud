@@ -8,7 +8,7 @@
 
   <ion-card *ngFor="let pro of producto">
 
-    <ion-img [src]="pro.img"></ion-img>
+    <ion-img [src]="pro.img" style="width: 250px; height: 250px;"></ion-img>
     <ion-card-header>
       <ion-card-title>{{ pro.nombre }}</ion-card-title>
       <ion-card-subtitle *ngIf="pro.en_oferta == false">{{pro.precio | currency:'CLP'}}</ion-card-subtitle>

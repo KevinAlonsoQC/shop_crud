@@ -62,8 +62,10 @@ export class CarritoPage implements OnInit {
           await this.sleep(1600);
           this.api.UpdateCarrito(pro.id, {cantidad:pro.cantidad, total: pro.total}).subscribe()
           this.loading_bucle = false;
+          break
         }else{
           this.mostrar_alerta('Alerta', '¡Atención!', '¡No puedes llevar una cantidad inferior a 1!');
+          break
         }
       }
     }
@@ -83,8 +85,10 @@ export class CarritoPage implements OnInit {
           await this.sleep(1600);
           this.api.UpdateCarrito(pro.id, {cantidad:pro.cantidad, total: pro.total}).subscribe();
           this.loading_bucle = false;
+          break
         }else{
           this.mostrar_alerta('Alerta', '¡Atención!', '¡No puedes llevar más del stock disponible!');
+          break
         }
       }
     }
@@ -105,6 +109,7 @@ export class CarritoPage implements OnInit {
 
         this.total_pago = this.total_pago - pro.total
         this.router.navigateByUrl('listar-producto')
+        break
       }
     }
 
@@ -143,10 +148,8 @@ export class CarritoPage implements OnInit {
   obtenerDatos(){
     this.api.CallBack_Carritos().subscribe(carro => {
       if(carro){
-
         for(let value of carro){
           if(value.owner == this.idCliente){
-
             this.cache_carro.next(this.cache_carro.getValue().concat(value));
             this.total_pago = this.total_pago + (value.precio*value.cantidad)
           }

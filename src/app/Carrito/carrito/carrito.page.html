@@ -16,9 +16,6 @@
       <ion-card-subtitle>{{pro.precio | currency:'CLP'}} c/u</ion-card-subtitle>
     </ion-card-header>
 
-    <ion-card-content>
-
-
       <ion-grid>
         <ion-row>
           <ion-col>
@@ -28,7 +25,7 @@
           </ion-col>
 
           <ion-col>
-            <ion-fab-button size="small" style="width: 40px; height: 40px;">
+            <ion-fab-button>
               <ion-label>{{pro.cantidad}}</ion-label>
             </ion-fab-button>
           </ion-col>
@@ -46,12 +43,8 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-
-              <ion-icon name="pricetags-sharp"></ion-icon>
-               Total: {{pro.total | currency:'CLP'}}
-
+            <ion-icon name="pricetags-sharp"></ion-icon>Total: {{pro.total | currency:'CLP'}}
           </ion-col>
-
           <ion-col>
             <ion-fab-button [disabled]="loading_bucle" size="small" color="danger" (click)="deleteItemCarrito(pro)">
               <ion-icon name="trash-sharp"></ion-icon>
@@ -60,14 +53,13 @@
         </ion-row>
       </ion-grid>
 
-    </ion-card-content>
 
   </ion-card>
 
-  <ion-card *ngIf="total_pago > 0">
+  <ion-card *ngIf="total_pago > 0" >
     <ion-card-title>Precio Total:</ion-card-title>
     <ion-card-header>{{total_pago | currency:'CLP'}}</ion-card-header>
-    <ion-button>Comprar</ion-button>
+    <ion-button color="success">Comprar</ion-button>
   </ion-card>
 
   <ion-card *ngIf="total_pago <= 0">
